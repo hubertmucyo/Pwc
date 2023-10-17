@@ -1,3 +1,3 @@
 # Pwc
-python with code academy
+python fundamentals
 https://www.pythoncheatsheet.org/cheatsheet/basics
