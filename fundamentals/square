@@ -1,0 +1,5 @@
+#this program uses function to square a number
+def square(num):
+   return num**2
+x=float(input("enter any number: "))
+print("the square of your number is: ",square(x))
