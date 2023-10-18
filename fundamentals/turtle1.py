@@ -9,3 +9,5 @@ for a in range(15):
     hubert.right(angle)
     dist+=10
     angle-=3
+
+wn.exitonclick()
