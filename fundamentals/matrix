@@ -1,0 +1,11 @@
+matrix=[]
+for i in range(3):
+    row=[]
+    for j in range(3):
+        nums=float(input(f"Enter num in row: {i+1}, Enter num in col: {j+1}"))
+        row.append(nums)
+    matrix.append(row)
+
+print("matrix entered: ")
+for mat in matrix:
+    print(mat)
