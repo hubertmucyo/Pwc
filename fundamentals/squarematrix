@@ -1,0 +1,18 @@
+matrix=[]
+for i in range(3):
+    value=[]
+    for i in range(3):
+        nums=float(input(f"Enter numbers that makeup the matrix: {i+1},{j+1}"))
+        value.append(nums)
+    matrix.append(value)
+
+mat=[]
+for temp1 in matrix:
+    temp_mat=list()
+    for temp2 in temp1:
+        temp_mat.append(temp2**2)
+    mat.append(temp_mat)
+    
+for _ in matrix:
+    print("The matrix is:",matrix)
+    print("The matrix squared is:",mat)
