@@ -1,0 +1,67 @@
+class Patient:
+    def __init__(self, name, age, weight, height):
+        self.name = name
+        self.age = age
+        self.weight = weight
+        self.height = height
+
+    def calculate_health_score(self):
+        # Simple health score calculation based on BMI (Body Mass Index)
+        bmi = (self.weight / (self.height * self.height)) * 703
+        if bmi < 18.5:
+            return "Underweight"
+        elif 18.5 <= bmi < 24.9:
+            return "Normal weight"
+        elif 25 <= bmi < 29.9:
+            return "Overweight"
+        else:
+            return "Obese"
+
+
+class PatientManager:
+    def __init__(self):
+        self.patients = []
+
+    def add_patient(self, patient):
+        self.patients.append(patient)
+
+    def display_patients(self):
+        if not self.patients:
+            print("No patients to display.")
+        else:
+            for i, patient in enumerate(self.patients, start=1):
+                print(f"{i}. {patient.name} - Age: {patient.age}, Health: {patient.calculate_health_score()}")
+
+def main():
+    patient_manager = PatientManager()
+
+    while True:
+        print("\nPatient Management System")
+        print("1. Add Patient")
+        print("2. Display Patients")
+        print("3. Exit")
+
+        choice = input("Enter your choice (1/2/3): ")
+
+        if choice == "1":
+            name = input("Enter patient's name: ")
+            age = int(input("Enter patient's age: "))
+            weight = float(input("Enter patient's weight (in kg): "))
+            height = float(input("Enter patient's height (in meters): "))
+
+            patient = Patient(name, age, weight, height)
+            patient_manager.add_patient(patient)
+            print("Patient added successfully.")
+
+        elif choice == "2":
+            patient_manager.display_patients()
+
+        elif choice == "3":
+            print("Exiting the program. Goodbye!")
+            break
+
+        else:
+            print("Invalid choice. Please enter 1, 2, or 3.")
+
+if __name__ == "__main__":
+    main()
