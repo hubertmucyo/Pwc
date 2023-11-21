@@ -1,0 +1,7 @@
+#This is an empty class
+
+class empt:
+    pass
+
+obj1 = empt()
+print(obj1)
