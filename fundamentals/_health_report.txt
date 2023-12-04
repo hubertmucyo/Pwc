@@ -1,0 +1,7 @@
+Name: 
+Gender: 
+Blood Type: 
+Age: 
+BMI: 28.68
+Category: Overweight
+Medical Advice:

@@ -1,0 +1,7 @@
+Name: Mucyo
+Gender: male
+Blood Type: o
+Age: 18
+BMI: 0.00
+Category: 
+Medical Advice:

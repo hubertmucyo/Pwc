@@ -1,0 +1,7 @@
+Name: Mucyo Hubert
+Gender: male
+Blood Type: 0
+Age: 20
+BMI: 0.00
+Category: Underweight
+Medical Advice:
