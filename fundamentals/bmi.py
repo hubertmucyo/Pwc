@@ -1,7 +1,13 @@
 import time
 
+print()
 print("Welcome to BodyMath: A smart BMI calculator")
-print("This application is designed to assess Body-Mass-Index, a common metric used for gauging body weight in relation to height\n")
+time.sleep(3)
+print()
+print("The all-in-one health and wellness app designed to empower individuals on their weight management journey.") 
+print("This innovative app seamlessly combines BMI tracking with personalized insights based on blood type,")
+print("creating a holistic approach to achieving and maintaining a healthy weight.")
+time.sleep(5)
 
 class Patient:
     def __init__(self, name="", gender="", blood_type="", age=""):
@@ -27,9 +33,10 @@ class Patient:
         height = 0.0
         bmi = 0.0
         advice = ""
+        diet=""
 
         while True:
-            print("\n1. Add patient\n2. Enter your details\n3. Display patient\n4. Medical advice\n5. Save and Exit")
+            print("\n1. Add patient\n2. Enter your details for BMI calculation\n3. Display patient information\n4. Medical advice\n5. Dietary advice\n6. Access your exercise routine\n7. Meet professional personnels and nutritionists\n8. Save and Exit")
             choice = input("Enter your choice (1-5): ")
 
             if choice == "1":
@@ -45,15 +52,21 @@ class Patient:
                     print(f"Your BMI is {bmi:.2f}, and your category is {category}")
                 except ValueError:
                     print("Invalid input! Please enter numeric values for weight and height! ")
-                
+
             elif choice == "3":
                 self.display_patient_info()
                 time.sleep(10)
             elif choice == "4":
-                advice = dietary_advise(category, self.blood_type, return_advice=True)
+                advice = medical_advise(category, self.blood_type, return_advice=True)
                 print(advice)
                 time.sleep(30)
             elif choice == "5":
+                print(dietary_advise)
+            elif choice == "6":
+                print(exercice_routine)
+            elif choice == "7":
+                print(doctor)
+            elif choice == "8":
                 self.save_to_file(bmi, category, advice)
                 print("Exiting the application. Goodbye!")
                 break
@@ -76,148 +89,1176 @@ def bmi_calculator(weight, height):
 
 def dietary_advise(category, blood_type, return_advice=False):
     category_lower = category.lower()
-    advice = ""
+    diet=""
 
     if category_lower == "underweight":
         if blood_type == "o" or blood_type == "O":
-            advice = """You are advised to:
-                    - Consult with a healthcare professional to identify potential underlying causes of low weight.
-                    - Develop a balanced and nutrient-dense meal plan to support weight gain.
-                    - Consider incorporating healthy fats, protein-rich foods, and a variety of fruits and vegetables into the diet.
-                    - Collaborate with a registered dietitian to ensure nutritional needs are met.
-                    - Rule out any medical conditions contributing to low weight.
-                    - Focus on lean protein sources such as poultry, fish, and lean meats.
-                    - Include whole grains like quinoa, brown rice, and oats.
-                    - Incorporate healthy fats from sources like olive oil, avocados, and nuts."""
+            diet = """ Dietary advice :
+            overall idea:
+            - Focus on lean proteins like meat, poultry, and fish.
+            - Include vegetables and fruits, with an emphasis on green leafy vegetables.
+            - Consider snacks with nuts or seeds.
+
+            meal plan:
+            Monday:
+                Breakfast:
+                    Scrambled eggs with spinach and whole-grain toast.
+                Lunch:
+                    Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                    Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                    Greek yogurt with sliced berries and a handful of almonds.
+                Lunch:
+                    Lentil soup with a side of whole-grain bread.
+                Dinner:
+                    Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                    Smoothie with banana, spinach, and almond milk.
+                Lunch:
+                    Turkey and avocado wrap with whole wheat tortilla.
+                Dinner:
+                    Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                    Whole grain toast with avocado and poached eggs.
+                Lunch:
+                    Quinoa bowl with mixed vegetables and grilled chicken.
+                Dinner:
+                    Grilled salmon with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                    Oatmeal with sliced almonds and mixed berries.
+                Lunch:
+                    Chickpea salad with feta cheese and olive oil dressing.
+                Dinner:
+                    Baked cod with sweet potato wedges.
+            Saturday:
+                Breakfast:
+                    Chia seed pudding with almond milk and topped with mixed berries.
+                Lunch:
+                    pinach and tomato omelette with whole-grain toast.
+                Dinner:
+                    Stir-fried beef with broccoli and brown rice.
+            Sunday:
+                Breakfast:
+                    Cottage cheese with pineapple.
+                Lunch:
+                    Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                    Grilled chicken with quinoa and steamed asparagus.
+
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.   
+            """
         elif blood_type == "a" or blood_type == "A":
-            advice = """You are advised to:
-                    - Consult with a healthcare professional to identify potential underlying causes of low weight.
-                    - Develop a balanced and nutrient-dense meal plan to support weight gain.
-                    - Collaborate with a registered dietitian to ensure nutritional needs are met.
-                    - Rule out any medical conditions contributing to low weight. 
-                    - Include lean protein sources such as fish, poultry, tofu, and legumes.
-                    - Incorporate whole grains like quinoa, brown rice, and oats for energy.
-                    - Include sources of healthy fats, such as avocados, nuts, and olive oil."""
+            diet = """ Dietary addice:
+            general idea:
+            - Emphasize plant-based proteins like beans and tofu.
+            - Include whole grains like quinoa and brown rice.
+            - Opt for smaller, more frequent meals.
+            meal plan:
+            Monday:
+                Breakfast:
+                    Oatmeal with sliced banana and almond butter.
+                Lunch:
+                    Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                    Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                    Fruit smoothie with spinach, berries, and soy milk.
+                Lunch:
+                    Lentil soup with a side of whole-grain bread.
+                Dinner:
+                    Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                    Whole grain toast with avocado and poached eggs.
+                Lunch:
+                    Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                    Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                    Greek yogurt with honey and mixed berries.
+                Lunch:
+                    Quinoa bowl with roasted vegetables and grilled chicken.
+                Dinner:
+                    Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                    Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                    Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                    Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                    Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                    Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                    Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                    Cottage cheese with sliced peaches.
+                Lunch:
+                    Mixed greens salad with grilled salmon.
+                Dinner:
+                    Stir-fried tofu with soba noodles and broccoli.
+
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.         
+            """    
         elif blood_type == "b" or blood_type == "B":
-            advice = """You are advised to:
-                - Consult with a healthcare professional to identify potential underlying causes of low weight.
-                - Develop a balanced and nutrient-dense meal plan to support weight gain.
-                - Consider incorporating protein-rich foods, and a variety of fruits and vegetables into the diet.
-                - Collaborate with a registered dietitian to ensure nutritional needs are met.
-                - Rule out any medical conditions contributing to low weight.
-                - Incorporate lean protein sources like poultry, fish, and eggs.
-                - Include whole grains such as brown rice and quinoa.
-                - Consider dairy or fortified plant-based alternatives for additional nutrients.
-                - Include sources of healthy fats like nuts, seeds, and olive oil."""
+            diet = """ Dietary addice:
+            general idea:
+          
+
+            meal plan:
+            Monday:
+                Breakfast:
+                    Scrambled eggs with spinach and whole-grain toast.
+                Lunch:
+                    Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                    Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                    Fruit smoothie with berries, banana, and almond milk.
+                Lunch:
+                    Lentil soup with a side of whole-grain bread.
+                Dinner:
+                    Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                    Whole grain toast with avocado and poached eggs.
+                Lunch:
+                    Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                    Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                    Greek yogurt with honey and mixed berries.
+                Lunch:
+                    Quinoa bowl with roasted vegetables and grilled chicken.
+                Dinner:
+                    Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                    Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                    Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                    Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                    Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                    Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                    Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                    Cottage cheese with sliced peaches.
+                Lunch:
+                    Mixed greens salad with grilled salmon.
+                Dinner:
+                    Stir-fried tofu with soba noodles and broccoli.
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.
+           """
         elif blood_type == "ab" or blood_type == "AB":
+            diet = """ Dietary addice:
+            general idea:
+            
+
+            meal plan:
+            Monday:
+                Breakfast:
+                    Oatmeal with sliced banana and almond butter.
+                Lunch:
+                    Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                    Fruit smoothie with berries, banana, and almond milk.
+                Lunch:
+                    Lentil soup with a side of whole-grain bread.
+                Dinner:
+                    tir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                    Whole grain toast with avocado and poached eggs.
+                Lunch:
+                    Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                    Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                    Greek yogurt with honey and mixed berries.
+                Lunch:
+                    Quinoa bowl with roasted vegetables and grilled chicken.
+                Dinner:
+                    Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                    Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                    Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                    Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                    Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                    Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                    Cottage cheese with sliced peaches.
+                Lunch:
+                    Mixed greens salad with grilled salmon.
+                Dinner:
+                    Stir-fried tofu with soba noodles and broccoli.
+
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.
+            """
+        else:
+            print("Invalid blood type for the given category")
+
+    elif category_lower == "normal weight":        
+        if blood_type == "o" or blood_type == "O":
+            diet = """ Dietary addice:
+            general idea:
+            
+
+            meal plan:
+            Monday:
+                Breakfast:
+                Omelette with spinach and tomatoes.
+                Lunch:
+                Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                Greek yogurt with sliced berries and a handful of almonds.
+                Lunch:
+                Lentil soup with a side of whole-grain bread.
+                Dinner:
+                Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                Whole grain toast with avocado and poached eggs.
+                Lunch:
+                Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                Smoothie with banana, spinach, and almond milk.
+                Lunch:
+                Quinoa bowl with mixed vegetables and grilled chicken.
+                Dinner:
+                Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                Cottage cheese with sliced peaches.
+                Lunch:
+                Mixed greens salad with grilled salmon.
+                Dinner:
+                Stir-fried tofu with soba noodles and broccoli.
+
+
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.
+            """
+        elif blood_type == "a" or blood_type == "A":
+            diet = """ Dietary addice:
+            general idea:
+            
+
+            meal plan:
+            Monday:
+                Breakfast:
+                Oatmeal with sliced bananas and almonds.
+                Lunch:
+                Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                Smoothie with spinach, berries, and almond milk.
+                Lunch:
+                Lentil soup with a side of whole-grain bread.
+                Dinner:
+                Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                Whole grain toast with avocado and poached eggs.
+                Lunch:
+                Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                Greek yogurt with honey and mixed berries.
+                Lunch:
+                Quinoa bowl with roasted vegetables and grilled chicken.
+                Dinner:
+                Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                Cottage cheese with sliced peaches.
+                Lunch:
+                Mixed greens salad with grilled salmon.
+                Dinner:
+                Stir-fried tofu with soba noodles and broccoli.
+            
+
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.
+            """    
+        elif blood_type == "b" or blood_type == "B":
+            diet = """ Dietary addice:
+            general idea:
+            
+
+            meal plan:
+            Monday:
+                Breakfast:
+                Scrambled eggs with spinach and whole-grain toast.
+                Lunch:
+                Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                Fruit smoothie with berries, banana, and almond milk.
+                Lunch:
+                Lentil soup with a side of whole-grain bread.
+                Dinner:
+                Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                Whole grain toast with avocado and poached eggs.
+                Lunch:
+                Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                Greek yogurt with honey and mixed berries.
+                Lunch:
+                Quinoa bowl with roasted vegetables and grilled chicken.
+                Dinner:
+                Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                Cottage cheese with sliced peaches.
+                Lunch:
+                Mixed greens salad with grilled salmon.
+                Dinner:
+                Stir-fried tofu with soba noodles and broccoli.
+
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.
+            """    
+        elif blood_type == "ab" or blood_type == "AB":
+            diet = """ Dietary addice:
+            general idea:
+            
+
+            meal plan:
+            Monday:
+                Breakfast:
+                Oatmeal with sliced bananas and almonds.
+                Lunch:
+                Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                Smoothie with spinach, berries, and almond milk.
+                Lunch:
+                Lentil soup with a side of whole-grain bread.
+                Dinner:
+                Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                Whole grain toast with avocado and poached eggs.
+                Lunch:
+                Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                Greek yogurt with honey and mixed berries.
+                Lunch:
+                Quinoa bowl with roasted vegetables and grilled chicken.
+                Dinner:
+                Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                Cottage cheese with sliced peaches.
+                Lunch:
+                Mixed greens salad with grilled salmon.
+                Dinner:
+                Stir-fried tofu with soba noodles and broccoli.
+            
+
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.
+            """    
+        else:   
+            print("Invalid blood type for the given category")     
+    elif category_lower == "overweight":        
+        if blood_type == "o" or blood_type == "O":
+            diet = """ Dietary addice:
+            general idea:
+            
+
+            meal plan:
+            Monday:
+                Breakfast:
+                Oatmeal with sliced bananas and almonds.
+                Lunch:
+                Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                Smoothie with spinach, berries, and almond milk.
+                Lunch:
+                Lentil soup with a side of whole-grain bread.
+                Dinner:
+                Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                Whole grain toast with avocado and poached eggs.
+                Lunch:
+                Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                Greek yogurt with honey and mixed berries.
+                Lunch:
+                Quinoa bowl with roasted vegetables and grilled chicken.
+                Dinner:
+                Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                Cottage cheese with sliced peaches.
+                Lunch:
+                Mixed greens salad with grilled salmon.
+                Dinner:
+                Stir-fried tofu with soba noodles and broccoli.
+
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.
+            """
+        elif blood_type == "a" or blood_type == "A":
+            diet = """ Dietary addice:
+            general idea:
+            
+
+            meal plan:
+            Monday:
+                Breakfast:
+                Oatmeal with sliced bananas and almonds.
+                Lunch:
+                Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                Smoothie with spinach, berries, and almond milk.
+                Lunch:
+                Lentil soup with a side of whole-grain bread.
+                Dinner:
+                Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                Whole grain toast with avocado and poached eggs.
+                Lunch:
+                Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                Greek yogurt with honey and mixed berries.
+                Lunch:
+                Quinoa bowl with roasted vegetables and grilled chicken.
+                Dinner:
+                Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                Cottage cheese with sliced peaches.
+                Lunch:
+                Mixed greens salad with grilled salmon.
+                Dinner:
+                Stir-fried tofu with soba noodles and broccoli.
+
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.
+            """    
+        elif blood_type == "b" or blood_type == "B":
+            diet = """ Dietary addice:
+            general idea:
+            
+
+            meal plan:
+            Monday:
+                Breakfast:
+                Oatmeal with sliced bananas and almonds.
+                Lunch:
+                Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                Smoothie with spinach, berries, and almond milk.
+                Lunch:
+                Lentil soup with a side of whole-grain bread.
+                Dinner:
+                Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                Whole grain toast with avocado and poached eggs.
+                Lunch:
+                Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                Greek yogurt with honey and mixed berries.
+                Lunch:
+                Quinoa bowl with roasted vegetables and grilled chicken.
+                Dinner:
+                Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                Cottage cheese with sliced peaches.
+                Lunch:
+                Mixed greens salad with grilled salmon.
+                Dinner:
+                Stir-fried tofu with soba noodles and broccoli.
+
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.
+            """    
+        elif blood_type == "ab" or blood_type == "AB":
+            diet = """ Dietary addice:
+            general idea:
+            
+
+            meal plan:
+            Monday:
+                Breakfast:
+                Oatmeal with sliced bananas and almonds.
+                Lunch:
+                Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                Smoothie with spinach, berries, and almond milk.
+                Lunch:
+                Lentil soup with a side of whole-grain bread.
+                Dinner:
+                Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                Whole grain toast with avocado and poached eggs.
+                Lunch:
+                Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                Greek yogurt with honey and mixed berries.
+                Lunch:
+                Quinoa bowl with roasted vegetables and grilled chicken.
+                Dinner:
+                Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                Cottage cheese with sliced peaches.
+                Lunch:
+                Mixed greens salad with grilled salmon.
+                Dinner:
+                Stir-fried tofu with soba noodles and broccoli.
+
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.
+            """    
+        else:   
+            print("Invalid blood type for the given category") 
+
+    elif category_lower == "obese":        
+        if blood_type == "o" or blood_type == "O":
+            diet = """ Dietary addice:
+            general idea:
+            
+
+            meal plan:
+            Monday:
+                Breakfast:
+                Oatmeal with sliced bananas and almonds.
+                Lunch:
+                Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                Smoothie with spinach, berries, and almond milk.
+                Lunch:
+                Lentil soup with a side of whole-grain bread.
+                Dinner:
+                Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                Whole grain toast with avocado and poached eggs.
+                Lunch:
+                Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                Greek yogurt with honey and mixed berries.
+                Lunch:
+                Quinoa bowl with roasted vegetables and grilled chicken.
+                Dinner:
+                Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                Cottage cheese with sliced peaches.
+                Lunch:
+                Mixed greens salad with grilled salmon.
+                Dinner:
+                Stir-fried tofu with soba noodles and broccoli.
+
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.
+            """
+        elif blood_type == "a" or blood_type == "A":
+            diet = """ Dietary addice:
+            general idea:
+            
+
+            meal plan:
+            Monday:
+                Breakfast:
+                Oatmeal with sliced bananas and almonds.
+                Lunch:
+                Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                Smoothie with spinach, berries, and almond milk.
+                Lunch:
+                Lentil soup with a side of whole-grain bread.
+                Dinner:
+                Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                Whole grain toast with avocado and poached eggs.
+                Lunch:
+                Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                Greek yogurt with honey and mixed berries.
+                Lunch:
+                Quinoa bowl with roasted vegetables and grilled chicken.
+                Dinner:
+                Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                Cottage cheese with sliced peaches.
+                Lunch:
+                Mixed greens salad with grilled salmon.
+                Dinner:
+                Stir-fried tofu with soba noodles and broccoli.
+
+            Note:   
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.
+            """    
+        elif blood_type == "b" or blood_type == "B":
+            diet = """ Dietary addice:
+            general idea:
+            
+
+            meal plan:
+            Monday:
+                Breakfast:
+                Oatmeal with sliced bananas and almonds.
+                Lunch:
+                Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                Smoothie with spinach, berries, and almond milk.
+                Lunch:
+                Lentil soup with a side of whole-grain bread.
+                Dinner:
+                Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                Whole grain toast with avocado and poached eggs.
+                Lunch:
+                Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                Greek yogurt with honey and mixed berries.
+                Lunch:
+                Quinoa bowl with roasted vegetables and grilled chicken.
+                Dinner:
+                Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                Cottage cheese with sliced peaches.
+                Lunch:
+                Mixed greens salad with grilled salmon.
+                Dinner:
+                Stir-fried tofu with soba noodles and broccoli.
+
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.
+            """    
+        elif blood_type == "ab" or blood_type == "AB":
+            diet = """ Dietary addice:
+            general idea:
+            
+
+            meal plan:
+            Monday:
+                Breakfast:
+                Oatmeal with sliced bananas and almonds.
+                Lunch:
+                Quinoa salad with mixed vegetables and grilled chicken.
+                Dinner:
+                Baked salmon with sweet potato and steamed broccoli.
+            Tuesday:
+                Breakfast:
+                Smoothie with spinach, berries, and almond milk.
+                Lunch:
+                Lentil soup with a side of whole-grain bread.
+                Dinner:
+                Stir-fried tofu with brown rice and mixed vegetables.
+            Wednesday:
+                Breakfast:
+                Whole grain toast with avocado and poached eggs.
+                Lunch:
+                Chickpea and vegetable curry with basmati rice.
+                Dinner:
+                Grilled shrimp with quinoa and sautéed kale.
+            Thursday:
+                Breakfast:
+                Greek yogurt with honey and mixed berries.
+                Lunch:
+                Quinoa bowl with roasted vegetables and grilled chicken.
+                Dinner:
+                Baked cod with quinoa and roasted Brussels sprouts.
+            Friday:
+                Breakfast:
+                Chia seed pudding with almond milk and topped with sliced kiwi.
+                Lunch:
+                Spinach and feta omelette with whole-grain toast.
+                Dinner:
+                Stir-fried tempeh with brown rice and asparagus.
+            Saturday:
+                Breakfast:
+                Smoothie with pineapple, kale, and coconut water.
+                Lunch:
+                Quinoa salad with black beans, corn, and diced tomatoes.
+                Dinner:
+                Grilled chicken with quinoa and steamed asparagus.
+            Sunday:
+                Breakfast:
+                Cottage cheese with sliced peaches.
+                Lunch:
+                Mixed greens salad with grilled salmon.
+                Dinner:
+                Stir-fried tofu with soba noodles and broccoli.
+
+            Note:
+            - Adjust portion sizes based on individual needs.
+            - Include healthy snacks between meals if needed.
+            - Stay hydrated with water throughout the day.     
+
+            warning:
+            These meal plans are general suggestions and may not suit everyone. 
+            Individualized advice from healthcare professionals is crucial for 
+            addressing specific health conditions and dietary needs.
+            """    
+        else:   
+            print("Invalid blood type for the given category")         
+
+
+
+def medical_advise(category, blood_type, return_advice=False):
+    category_lower = category.lower()
+    advice = ""
+
+    if category_lower == "underweight":
+        if blood_type == "o" or blood_type == "a" or blood_type == "b" or blood_type == "A" or blood_type == "B" or blood_type == "O" or blood_type == "ab" or blood_type == "AB":
             advice = """You are advised to:
-                - Focus on portion control and mindful eating to support overall health.
-                - Engage in regular physical activity for cardiovascular health and overall well-being.
-                - Schedule regular check-ups with a healthcare provider for preventive care.
-                - Consider individual health goals and consult with a healthcare professional for personalized advice.
-                - Maintain a balanced diet with a mix of protein, carbohydrates, and fats.
-                - Focus on protein-rich foods like lean poultry, fish, and plant-based protein sources to support muscle development.
-                - Incorporate sources of healthy fats such as avocados and olive oil for added calories.
-                - Include a variety of colorful fruits and vegetables for a spectrum of nutrients."""
+            Increase Caloric Intake:
+            Consume a variety of nutrient-dense foods to boost calorie intake.
+            Include healthy fats such as avocados, nuts, seeds, and olive oil.
+
+            Protein-Rich Foods:
+            Include lean protein sources like poultry, fish, eggs, beans, and dairy to support muscle development.
+
+            Frequent Meals:
+            Eat smaller, more frequent meals throughout the day to increase overall calorie consumption.
+
+            Strength Training:
+            Engage in strength training exercises to build muscle mass.
+
+            Nutrient-Rich Snacks:
+            Snack on high-calorie, nutrient-dense foods like Greek yogurt, trail mix, and cheese.
+            """
         else:
             print("Invalid blood type for the given category")
 
     elif category_lower == "normal weight":
-        if blood_type == "o" or blood_type == "O":
+        if blood_type == "o" or blood_type == "a" or blood_type == "b" or blood_type == "A" or blood_type == "B" or blood_type == "O" or blood_type == "ab" or blood_type == "AB":
             advice = """You are advised to:
-                - Focus on portion control and mindful eating to support overall health.
-                - Engage in regular physical activity for cardiovascular health and overall well-being.
-                - Schedule regular check-ups with a healthcare provider for preventive care.
-                - Consider individual health goals and consult with a healthcare professional for personalized advice.
-                - Maintain a balanced diet with a mix of protein, carbohydrates, and fats.
-                - Choose lean protein sources, including fish, poultry, beans, and lentils.
-                - Prioritize a variety of colorful fruits and vegetables."""
-        elif blood_type == "a" or blood_type == "A" :
-            advice = """You are advised to:
-                - Focus on portion control and mindful eating to support overall health.
-                - Engage in regular physical activity for cardiovascular health and overall well-being.
-                - Schedule regular check-ups with a healthcare provider for preventive care.
-                - Consider individual health goals and consult with a healthcare professional for personalized advice.
-                - Maintain a balanced diet with a variety of fruits, vegetables, lean proteins, and whole grains.
-                - Explore plant-based protein sources like beans, lentils, and tofu.
-                - Minimize processed foods and focus on whole, nutrient-dense options."""
-        elif blood_type == "b" or blood_type == "B":
-            advice = """You are advised to:
-                - Focus on portion control and mindful eating to support overall health.
-                - Engage in regular physical activity for cardiovascular health and overall well-being.
-                - Schedule regular check-ups with a healthcare provider for preventive care.
-                - Consider individual health goals and consult with a healthcare professional for personalized advice.
-                - Maintain a balanced diet with a mix of protein, carbohydrates, and fats.
-                - Prioritize a variety of colorful vegetables for diverse nutrients.
-                - Include moderate amounts of lean protein sources.
-                - Choose whole, minimally processed foods over highly processed options."""
-        elif blood_type == "ab" or blood_type == "AB":
-            advice = """You are advised to:
-                - Maintain a balanced diet that includes a variety of food groups.
-                - Focus on portion control and mindful eating to support overall health.
-                - Engage in regular physical activity for cardiovascular health and overall well-being.
-                - Schedule regular check-ups with a healthcare provider for preventive care.
-                - Enjoy diverse protein sources including seafood, eggs, and legumes."""
+            Balanced Diet:
+            Maintain a well-balanced diet with a mix of carbohydrates, proteins, and fats.
+            Include a variety of fruits, vegetables, whole grains, lean proteins, and healthy fats.
+
+            Portion Control:
+            Be mindful of portion sizes to avoid overeating.
+
+            Regular Exercise:
+            Incorporate regular physical activity for overall health and weight maintenance.
+            """
         else:
             print("Invalid blood type for the given category")
 
     elif category_lower == "overweight":
-        if blood_type == "o" or blood_type == "O":
+        if blood_type == "o" or blood_type == "a" or blood_type == "b" or blood_type == "A" or blood_type == "B" or blood_type == "O" or blood_type == "ab" or blood_type == "AB":
             advice = """You are advised to:
-                - Adopt a balanced and calorie-controlled diet with an emphasis on whole foods.
-                - Engage in regular physical activity, incorporating both aerobic and strength-training exercises.
-                - Consult with a registered dietitian for personalized dietary guidance.
-                - Monitor portion sizes and practice mindful eating.
-                - Discuss weight management goals with a healthcare provider for ongoing support.
-                - Emphasize lean protein sources for satiety.
-                - Minimize processed foods and focus on whole, nutrient-dense options.
-                - Choose complex carbohydrates in moderation."""
-        elif blood_type == "a" or blood_type == "A":
-            advice = """You are advised to:
-                - Adopt a balanced and calorie-controlled diet with an emphasis on whole foods.
-                - Engage in regular physical activity, incorporating both aerobic and strength-training exercises.
-                - Consult with a registered dietitian for personalized dietary guidance.
-                - Discuss weight management goals with a healthcare provider for ongoing support.
-                - Be mindful of portion sizes and practice moderation.
-                - Consider incorporating more vegetarian meals with plant-based proteins.
-                - Include regular physical activity in your routine."""
-        elif blood_type == "b" or blood_type == "B":
-            advice = """You are advised to:
-                - Adopt a balanced and calorie-controlled diet with an emphasis on whole foods.
-                - Engage in regular physical activity, incorporating both aerobic and strength-training exercises.
-                - Consult with a registered dietitian for personalized dietary guidance.
-                - Discuss weight management goals with a healthcare provider for ongoing support.
-                - Be mindful of portion sizes and practice moderation.
-                - Consider incorporating more vegetarian meals with plant-based proteins.
-                - Include regular physical activity in your routine."""
-        elif blood_type == "ab" or blood_type == "AB":
-            advice = """You are advised to:
-                - Adopt a balanced and calorie-controlled diet with an emphasis on whole foods.
-                - Engage in regular physical activity, incorporating both aerobic and strength-training exercises.
-                - Consult with a registered dietitian for personalized dietary guidance.
-                - Monitor portion sizes and practice mindful eating.
-                - Discuss weight management goals with a healthcare provider for ongoing support.
-                - Choose complex carbohydrates in moderation.
-                - Emphasize lean protein sources for satiety.
-                - Minimize the intake of sugary snacks and beverages."""
+
+            Control Calorie :
+            Create a slight calorie deficit by consuming fewer calories than expended.
+
+            Whole Foods:
+            Choose whole, minimally processed foods to ensure nutrient intake.
+
+            High-Fiber Foods:
+            Include fiber-rich foods like fruits, vegetables, and whole grains to promote satiety.
+
+            Lean Proteins:
+            Opt for lean protein sources to support muscle maintenance during weight loss.
+
+            Limit Added Sugars and Processed Foods:
+            Reduce intake of sugary beverages, snacks, and highly processed foods.
+
+            Regular Exercise:
+            Engage in a combination of aerobic exercises and strength training for effective weight management.
+
+                
         else:
             print("Invalid blood type for the given category")
+            """
 
     elif category_lower == "obese":
-        if blood_type == "o" or blood_type == "a" or blood_type == "b" or blood_type == "A" or blood_type == "B" or blood_type == "O":
-            advice = """You are advised to:
-                - Seek guidance from healthcare professionals for a comprehensive weight management plan.
-                - Adopt a balanced and calorie-controlled diet, emphasizing whole foods.
-                - Incorporate regular physical activity into daily routines, with a mix of aerobic and strength-training exercises.
-                - Consider behavioral counseling or support groups for weight management.
-                - Discuss potential medical interventions, such as medications or bariatric surgery, if appropriate."""
-        elif blood_type == "ab" or blood_type == "AB":
-            advice = """You are advised to:
-                - Seek guidance from healthcare professionals for a comprehensive weight management plan.
-                - Adopt a balanced and calorie-controlled diet.
-                - Incorporate regular aerobic and strength-training exercises.
-                - Prioritize whole, unprocessed foods for nutritional density.
-                - Incorporate regular physical activity tailored to individual abilities and preferences."""
+        if blood_type == "o" or blood_type == "a" or blood_type == "b" or blood_type == "A" or blood_type == "B" or blood_type == "O" or blood_type == "ab" or blood_type == "AB":
+            advice = """ You are advised to:
+            Medical Supervision:
+            -Seek medical supervision for a comprehensive weight management plan.
+
+            Gradual Weight Loss:
+            -Aim for gradual, sustainable weight loss rather than rapid changes.
+
+            Balanced Diet:
+            -Emphasize a well-balanced diet with appropriate portion control.
+
+            Behavioral Changes:
+            -Address behavioral aspects of eating, such as emotional eating or mindless snacking.
+
+            Regular Physical Activity:
+            -Incorporate regular and varied physical activities to support weight loss.
+
+            Seek nutritional Counseling:
+            -Consult with a registered dietitian for personalized dietary guidance.
+                """
         else:
             print("Invalid blood type for the given category")
     else:
