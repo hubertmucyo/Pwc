@@ -1,13 +1,18 @@
+#!/usr/bin/python3
 import time
+import os
+import MySQLdb
 
 print()
 print("Welcome to BodyMath: A smart BMI calculator")
 time.sleep(3)
 print()
 print("The all-in-one health and wellness app designed to empower individuals on their weight management journey.") 
+time.sleep(1)
 print("This innovative app seamlessly combines BMI tracking with personalized insights based on blood type,")
+time.sleep(1)
 print("creating a holistic approach to achieving and maintaining a healthy weight.")
-time.sleep(5)
+time.sleep(1)
 
 class Patient:
     def __init__(self, name="", gender="", blood_type="", age=""):
@@ -20,12 +25,75 @@ class Patient:
         print(f"Name: {self.name}\nGender: {self.gender}\nBlood Type: {self.blood_type}\nAge: {self.age}")
 
     def save_to_file(self, bmi, category, advice):
+        os.makedirs("health_reports", exist_ok=True)
         file_name = f"{self.name}_health_report.txt"
-        with open(file_name, "w") as file:
+        file_path = os.path.join("health_reports", file_name)
+        with open(file_path, "w") as file:
             file.write(f"Name: {self.name}\nGender: {self.gender}\nBlood Type: {self.blood_type}\nAge: {self.age}\n")
             file.write(f"BMI: {bmi:.2f}\nCategory: {category}\n")
             file.write("Medical Advice:\n")
             file.write(advice or "")
+           
+    def save_to_database(self, file_name):
+            # Establish a connection to MySQL
+            connection = MySQLdb.connect(
+                host="localhost",
+                user="root",
+                password="2406",
+                port="3306"
+            )
+
+            # Create a cursor object
+            cursor = connection.cursor()
+
+            # Create the 'bodymath' database if it doesn't exist
+            create_database_query = "CREATE DATABASE IF NOT EXISTS bodymaths;"
+            cursor.execute(create_database_query)
+
+            # Use the 'bodymath' database
+            cursor.execute("USE bodymaths;")
+
+            # Create the 'Patient' table if it doesn't exist
+            create_patient_table_query = (
+                "CREATE TABLE IF NOT EXISTS Patient ("
+                "id INT AUTO_INCREMENT PRIMARY KEY,"
+                "name VARCHAR(255) NOT NULL,"
+                "gender VARCHAR(10) NOT NULL,"
+                "blood_type VARCHAR(5) NOT NULL,"
+                "age INT NOT NULL"
+                ");"
+            )
+            cursor.execute(create_patient_table_query)
+
+            # Create the 'report' table if it doesn't exist
+            create_report_table_query = (
+                "CREATE TABLE IF NOT EXISTS report ("
+                "id INT AUTO_INCREMENT PRIMARY KEY,"
+                "name VARCHAR(255) NOT NULL,"
+                "gender VARCHAR(10) NOT NULL,"
+                "blood_type VARCHAR(5) NOT NULL,"
+                "age INT NOT NULL,"
+                "patient_reports TEXT NOT NULL"
+                ");"
+            )
+            cursor.execute(create_report_table_query)
+
+            # Read content from the file
+            with open(file_name, "r") as file:
+                file_content = file.read()
+
+            # Insert data into the 'report' table
+            insert_data_query = (
+                "INSERT INTO report (name, gender, blood_type, age, patient_reports) VALUES (%s, %s, %s, %s, %s);"
+            )
+            data = (self.name, self.gender, self.blood_type, int(self.age), file_content)
+            cursor.execute(insert_data_query, data)
+
+            # Commit changes and close the connection
+            connection.commit()
+
+            cursor.close()
+            connection.close()
 
     def run_application(self):
         category = ""
@@ -34,10 +102,12 @@ class Patient:
         bmi = 0.0
         advice = ""
         diet=""
-
+        sports=""
+        doctor=""
+    
         while True:
             print("\n1. Add patient\n2. Enter your details for BMI calculation\n3. Display patient information\n4. Medical advice\n5. Dietary advice\n6. Access your exercise routine\n7. Meet professional personnels and nutritionists\n8. Save and Exit")
-            choice = input("Enter your choice (1-5): ")
+            choice = input("Enter your choice (1-8): ")
 
             if choice == "1":
                 self.name = input("Enter your name: ")
@@ -61,17 +131,59 @@ class Patient:
                 print(advice)
                 time.sleep(30)
             elif choice == "5":
-                print(dietary_advise)
+                diet = dietary_advice(category, self.blood_type, return_diet=True)
+                print(diet)
             elif choice == "6":
-                print(exercice_routine)
+                sports = exercises(category, return_sports=True)
+                print(sports)
             elif choice == "7":
-                print(doctor)
+                print("""
+                It is always better to seek advice from professionals.
+                Here is a list of recommended professionals like doctors and nutritionits.
+                Nutritionists:
+                - Nutrition Cabinet: LA PERVENCHE NUTRITION CABINET
+                  tel: 0780 626 378
+                  location: Opposite to, KK 10 Ave, Kigali
+                - Nutrition Cabinet: NUTRI-SANTE LTD
+                  tel: 0788 729 794
+                  location: Opposite to, KK 10 Ave, Kigali
+                - Nutri-Mediplus Nutrition cabinet
+                  tel: 0788 940 474
+                  location: KG 165 St, 2A, Kigali
+                - Amazon Nutrition Cabinet
+                  tel: 0788 906 119
+                  location: KG 173 St, Kigali
+                - NutriFirst Ltd
+                  tel: 0793 605 108
+                  location: KK 222 St, Kigali
+                
+                Hospitals:
+                
+                - CHUK
+                    tel: 0788 304 005
+                    location: KN 4 Ave, Kigali
+                - KIBAGABAGA HOSPITAL
+                    tel:0788 732 945
+                    location:KG 19 Ave, Kigali	
+                - La Croix du Sud Hospital
+                    tel: 0785 246 882
+                    location: KG 201 St, Kigali
+                - KANOMBE MILITARY HOSPITAL	
+                    location: 25C9+H57, Kigali
+                    info@rwandamilitaryhospital.rw
+                - KING FAISAL HOSPITAL	
+                    tel: 0788 123 200
+                    info@kfh.rw 
+                  
+                """)
             elif choice == "8":
                 self.save_to_file(bmi, category, advice)
+                if 'file_name' in locals():
+                    self.save_to_database(file_name)
                 print("Exiting the application. Goodbye!")
                 break
             else:
-                print("Invalid choice. Please enter a number between 1 and 5.")
+                print("Invalid choice. Please enter a number between 1 and 8.")
 
 def bmi_calculator(weight, height):
     bmi = weight / (height ** 2)
@@ -87,7 +199,9 @@ def bmi_calculator(weight, height):
 
     return bmi, category
 
-def dietary_advise(category, blood_type, return_advice=False):
+
+
+def dietary_advice(category, blood_type, return_diet=False):
     category_lower = category.lower()
     diet=""
 
@@ -1165,7 +1279,8 @@ def dietary_advise(category, blood_type, return_advice=False):
             addressing specific health conditions and dietary needs.
             """    
         else:   
-            print("Invalid blood type for the given category")         
+            print("Invalid blood type for the given category")      
+        return diet if return_diet else ""   
 
 
 
@@ -1233,10 +1348,10 @@ def medical_advise(category, blood_type, return_advice=False):
             Regular Exercise:
             Engage in a combination of aerobic exercises and strength training for effective weight management.
 
-                
+                """
         else:
             print("Invalid blood type for the given category")
-            """
+            
 
     elif category_lower == "obese":
         if blood_type == "o" or blood_type == "a" or blood_type == "b" or blood_type == "A" or blood_type == "B" or blood_type == "O" or blood_type == "ab" or blood_type == "AB":
@@ -1263,8 +1378,134 @@ def medical_advise(category, blood_type, return_advice=False):
             print("Invalid blood type for the given category")
     else:
         print("Invalid category")
-
     return advice if return_advice else ""
+
+def exercises(category,return_sports=False):
+    category_lower = category.lower()
+    sports=""
+    if category_lower == "underweight":
+        sports="""
+        Monday:
+            Cardio:
+            20 minutes of brisk walking or jogging.
+        Tuesday:
+            Strength Training:
+            Bodyweight exercises (e.g., push-ups, squats, lunges) - 3 sets of 12-15 reps each.
+        Wednesday:
+            Cardio:
+            20 minutes of cycling or swimming.
+        Thursday:
+            Flexibility and Mobility:
+            Yoga or stretching exercises - 30 minutes.
+        Friday:
+            Strength Training:
+            Resistance training with light weights - 3 sets of 12-15 reps each.
+        Saturday:
+            Cardio:
+            20 minutes of jump rope or dancing.
+        Sunday:
+            Rest or Light Activity:
+            Walking or gentle stretching.
+
+        Notes:
+        Warm-up before each session and cool down afterward.
+        Progress gradually and listen to your body.
+        Include activities you enjoy to make fitness a sustainable lifestyle.   
+        """
+
+    elif category_lower == "normal weight":   
+        sports="""
+        Monday:
+            Cardio:
+            30 minutes of running or cycling.
+        Tuesday:
+            Strength Training:
+            Full-body workout with weights - 4 sets of 10-12 reps each.
+        Wednesday:
+            Cardio and Interval Training:
+            High-intensity interval training (HIIT) - 20 minutes.
+        Thursday:
+            Flexibility and Mobility:
+            Pilates or yoga - 30 minutes.
+        Friday:
+            Strength Training:
+            Target specific muscle groups with compound exercises - 4 sets of 10-12 reps each.
+        Saturday:
+            Cardio:
+            30 minutes of swimming or rowing.
+        Sunday:
+            Active Recovery:
+            Light hiking or cycling.
+
+        Notes:
+        Warm-up before each session and cool down afterward.
+        Progress gradually and listen to your body.
+        Include activities you enjoy to make fitness a sustainable lifestyle.
+        """
+
+    elif category_lower == "overweight":
+        sports="""
+        Monday:
+            Cardio:
+            30 minutes of brisk walking or elliptical training.
+        Tuesday:
+            Strength and Endurance Training:
+            Circuit training with bodyweight exercises - 3 rounds.
+        Wednesday:
+            Cardio and Interval Training:
+            HIIT workout - 20 minutes.
+        Thursday:
+            Flexibility and Mobility:
+            Yoga or stretching - 30 minutes.
+        Friday:
+            Strength Training:
+            Moderate weight lifting with focus on form - 4 sets of 10-12 reps each.
+        Saturday:
+            Cardio:
+            30 minutes of cycling or swimming.
+        Sunday:
+            Active Recovery:
+            Light yoga or walking.
+
+        Notes:
+        Warm-up before each session and cool down afterward.
+        Progress gradually and listen to your body.
+        Include activities you enjoy to make fitness a sustainable lifestyle.
+        """
+
+    elif category_lower == "obese":
+        sports="""
+        Monday:
+            Low-Impact Cardio:
+            30 minutes of water aerobics or stationary cycling.
+        Tuesday:
+            Strength and Stability:
+            Seated or chair exercises focusing on stability - 3 sets of 12-15 reps.
+        Wednesday:
+            Low-Impact Cardio:
+            20 minutes of walking or recumbent cycling.
+        Thursday:
+            Flexibility and Mobility:
+            Gentle stretching or chair yoga - 30 minutes.
+        Friday:
+            Strength and Endurance:
+            Resistance band exercises for upper and lower body - 3 sets of 12-15 reps.
+        Saturday:
+            Low-Impact Cardio:
+            30 minutes of swimming or aquatic exercises.
+        Sunday:
+            Active Recovery:
+            Light stretching or a leisurely walk.
+
+        Notes:
+        Warm-up before each session and cool down afterward.
+        Progress gradually and listen to your body.
+        Include activities you enjoy to make fitness a sustainable lifestyle.
+        """
+
+    else:
+        print("Invalid category")
+    return sports if return_sports else ""
 
 # Create a Patient instance and run the application
 patient = Patient()
